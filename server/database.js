@@ -91,6 +91,7 @@ const TopicRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: [
+      "Available",
       "Pending",
       "Accepted",
       "InProgress",
@@ -98,7 +99,7 @@ const TopicRequestSchema = new mongoose.Schema({
       "Rejected",
       "Deleted",
     ],
-    default: "Pending",
+    default: "Available",
   },
   teacher: {
     type: TeacherSchema,
