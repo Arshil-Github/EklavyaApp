@@ -75,11 +75,12 @@ const TopicRequestSchema = new mongoose.Schema({
     required: true,
   },
   creationDate: {
-    type: Date,
+    type: String,
     required: true,
   },
   student: {
-    type: StudentSchema,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "StudentDb", // Refers to the Teacher model
     required: true,
   },
   urgency: {
@@ -102,7 +103,8 @@ const TopicRequestSchema = new mongoose.Schema({
     default: "Available",
   },
   teacher: {
-    type: TeacherSchema,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "TeacherDb", // Refers to the Teacher model
     required: false,
   },
 });
