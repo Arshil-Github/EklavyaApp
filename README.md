@@ -49,3 +49,36 @@ This repository contains the frontend for the Education Bridge App, developed us
 ![image](https://github.com/user-attachments/assets/b53fae35-d651-4324-877e-446bd601e7d4)
 
 
+## Backend
+This repository contains the backend for the Education Bridge App, developed using MongoDB and Express. The backend supports the app's functionality by managing databases, handling API requests, and ensuring smooth communication between the frontend and the database.
+
+### Features
+**Database Architecture**
+
+- studentdb: Stores information about students, including profiles and ratings.
+- teacherdb: Stores teacher profiles, ratings, and leaderboard details.
+- questsdb: Manages student learning requests and their statuses.
+
+**API Endpoints**
+
+_Authentication:_
+- POST /studentsignin - Register new students.
+- POST /teachersignin - Register new teachers.
+- POST /login - Authenticate existing users (students/teachers).
+
+_Requests Management:_
+- POST /createrequest - Submit a new learning request.
+- GET /getallavailablerequests - Fetch all pending requests for teachers.
+- PUT /updaterequests - Update request details or status.
+- PUT /acceptRequest - Allow teachers to accept a specific request.
+
+_Rating Updates:_
+- PUT /updatestudentrating - Update student feedback score.
+- PUT /updateteacherrating - Update teacher ratings based on feedback.
+
+_User Information:_
+- GET /getstudentinfo - Retrieve detailed information about a specific student.
+
+### Technology Stack
+- Backend Framework: Express.js
+- Database: MongoDB
