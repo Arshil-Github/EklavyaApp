@@ -1,0 +1,10 @@
+_id,name,date,langauge,region,student,status,__v,teacher,field
+674858534ef735df8d6b4409,Thermodynamics,Thu Nov 28 2024,Hindi,"Abu, Rajasthan",6742b013cd838392a632979e,Accepted,0,6742b2b073be5a861bbca3bd,
+674858c84ef735df8d6b440c,Loop,Thu Nov 28 2024,Punjabi,Punjab,674849b533e955f15bf88561,Accepted,0,6742b2b073be5a861bbca3bd,
+67489774d013c200dc75aa61,Wave Motion,Thu Nov 28 2024,Punjabi,Punjab,674849b533e955f15bf88561,Accepted,0,67489974d013c200dc75aa7b,
+67489786d013c200dc75aa64,Recursion,Thu Nov 28 2024,Punjabi,Punjab,674849b533e955f15bf88561,Accepted,0,,
+6748979cd013c200dc75aa67,Algae,Thu Nov 28 2024,Punjabi,Punjab,674849b533e955f15bf88561,Available,0,,
+67491a56880c79121eee53b2,Unity,Fri Nov 29 2024,English,Himachal,6742afc6cd838392a6329796,Completed,0,6742b2b073be5a861bbca3bd,
+674961d34fa05a40f1915d63,Tailwind,Fri Nov 29 2024,English,Himachal,6742afc6cd838392a6329796,InProgress,0,6742b2b073be5a861bbca3bd,
+674962114fa05a40f1915d66,Express,Fri Nov 29 2024,English,Himachal,6742afc6cd838392a6329796,Available,0,,
+6749d1b858d53978e0000780,Computer Vision,Fri Nov 29 2024,Hindi,"Abu, Rajasthan",6742b013cd838392a632979e,Available,0,,Machine Learning

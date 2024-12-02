@@ -74,7 +74,19 @@ const TopicRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  creationDate: {
+  date: {
+    type: String,
+    required: true,
+  },
+  field: {
+    type: String,
+    required: true,
+  },
+  langauge: {
+    type: String,
+    required: true,
+  },
+  region: {
     type: String,
     required: true,
   },
@@ -82,11 +94,6 @@ const TopicRequestSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "StudentDb", // Refers to the Teacher model
     required: true,
-  },
-  urgency: {
-    type: String,
-    required: true,
-    enum: ["High", "Medium", "Low"],
   },
   status: {
     type: String,

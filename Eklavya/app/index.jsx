@@ -1,19 +1,53 @@
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Link, useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import config from "../config";
+import { SafeAreaView } from "react-native-safe-area-context";
+import MainImage from "../assets/audience.png";
 
 export default function App() {
+  const router = useRouter();
   return (
-    <View className="flex-1 items-center justify-center bg-slate-800">
-      <Text className="text-9xl text-slate-200">Eklavya</Text>
+    <SafeAreaView className="flex-1 items-center justify-between bg-background">
+      <View className="h-[60%] justify-center">
+        <Image source={MainImage} className="w-[30vh] h-[30vh]" />
+      </View>
+      <View className="flex-1 p-5">
+        <Text className="text-5xl text-accent tracking-tighter text-center">
+          Eklavya
+        </Text>
+        <Text className="text-2xl text-text tracking-tighter mt-3 text-justify">
+          A new way to learn, connecting student with volunteers to bring about
+          a revolution in education.
+        </Text>
+      </View>
       <StatusBar style="auto" />
-      <Link
-        href="/signIn"
-        className="p-3 bg-red-200 w-[80%] text-center rounded-2xl text-slate-800 text-xl font-bold tracking-tighter mt-10"
+      <TouchableOpacity
+        className="w-[80vw] p-4 items-center bg-primary rounded-lg mt-2"
+        onPress={async () => {
+          //check if the async storage has usertype token or not
+          const userType = await AsyncStorage.getItem("userType");
+
+          if (userType === "student" && config.useStorage)
+            router.push("/studentHome");
+          else if (userType === "teacher" && config.useStorage)
+            router.push("/teachersHome");
+          else router.push("/createAccount");
+        }}
       >
-        Get Started
-      </Link>
-    </View>
+        <Text className="text-2xl font-semibold color-background">
+          Get Started
+        </Text>
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 }
 

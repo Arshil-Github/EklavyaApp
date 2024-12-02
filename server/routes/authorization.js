@@ -88,9 +88,36 @@ authRouter.post("/teacherSignIn", async (req, res) => {
 });
 
 // Login function
-authRouter.post("/login", (req, res) => {
+authRouter.post("/login", async (req, res) => {
   // Your login logic here
-  res.send("Login endpoint");
+  const { id, password } = req.body;
+
+  if (!id || !password) {
+    return res.status(400).send("All fields are required");
+  }
+
+  try {
+    const existingTeacher = await database.TeacherDb.findOne({
+      phoneNumber: id,
+      password,
+    });
+    const existingStudent = await database.StudentDb.findOne({
+      phoneNumber: id,
+      password,
+    });
+
+    if (existingTeacher) {
+      return res.status(200).send(existingTeacher);
+    }
+    if (existingStudent) {
+      return res.status(200).send(existingStudent);
+    } else {
+      return res.status(400).send("User not found");
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send("Error creating request");
+  }
 });
 
 module.exports = authRouter;

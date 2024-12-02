@@ -5,64 +5,116 @@ import {
   View,
   TouchableOpacity,
   Button,
+  ScrollView,
+  Dimensions,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
+import NavigationBar from "../components/navigationBar";
+import BodySection1 from "../components/bodySection1";
+import VerticalCard from "../components/VerticalCard";
+import ExploreIcon from "../assets/explore.png";
+import LeaderboardIcon from "../assets/ranking.png";
+
+const { width: screenWidth } = Dimensions.get("window");
 
 const TeachersHome = () => {
   const router = useRouter();
+
+  const [teacher, setTeacher] = useState(null);
+
+  useEffect(() => {
+    const getTeacher = async () => {
+      const teacher = JSON.parse(await AsyncStorage.getItem("userData"));
+      console.log(teacher);
+      setTeacher(teacher.name);
+    };
+    getTeacher();
+  }, []);
+
   return (
-    <SafeAreaView className="h-screen p-2 bg-slate-800">
-      <Text className="color-slate-50 m-2 text-5xl tracking-tightest">
-        Volunteer Teacher
-      </Text>
-      <View className=" p-2 m-3 bg-slate-600 min-h-[40vh]">
-        <Text className="color-slate-50 text-2xl font-semibold">
-          My Students
-        </Text>
-        <StudentSingle />
-        <StudentSingle />
-        <StudentSingle />
-        <StudentSingle />
-        <StudentSingle />
-        <StudentSingle />
-        <Button
-          title="View All"
-          onPress={() => {
-            alert("View All Students");
-          }}
-        />
-      </View>
-      <View className="p-2 m-3 bg-slate-600 ">
-        <Text className="color-slate-50 text-2xl font-semibold">
-          Recomemded Request
-        </Text>
-        <RequestSingle />
-        <Button
-          title="View All"
-          onPress={() => {
-            router.push("/requests");
-          }}
-        />
-      </View>
-    </SafeAreaView>
-  );
-};
-const StudentSingle = ({
-  studentName = "Test Student",
-  studentLocation = "Test Location",
-}) => {
-  return (
-    <TouchableHighlight>
-      <View className="flex flex-row justify-between p-2 bg-white mt-3 items-center">
-        <View className="flex flex-row items-center">
-          <View className="rounded-full bg-red-200 h-10 w-10" />
-          <Text className="text-lg ml-2">StudentName</Text>
+    <SafeAreaView
+      edges={["right", "top", "left"]}
+      className="h-full p-2 bg-secondary flex items-center"
+    >
+      <View className="w-full h-[25vh] mt-2">
+        <View className="flex flex-row justify-between items-center p-2">
+          <Text className="text-2xl color-text ">
+            Welcome, {teacher ? teacher.split(" ")[0] : "Teacher"}
+          </Text>
+          <View className="w-16 h-16 bg-primary rounded-full" />
         </View>
-        <Text>Student Location</Text>
+
+        <View className="p-2 mt-3">
+          <Text className="text-2xl color-text  font-heading">
+            Children learn more from who you
+          </Text>
+          <Text className="text-3xl tracking-tighter font-semibold color-accent">
+            are than what you teach.
+          </Text>
+        </View>
       </View>
-    </TouchableHighlight>
+
+      <BodySection1>
+        <ScrollView
+          className="flex-1 "
+          horizontal
+          snapToInterval={screenWidth}
+          snapToAlignment="center"
+          decelerationRate="fast"
+          showsHorizontalScrollIndicator={false}
+          persistentScrollbar={false}
+        >
+          <VerticalCard
+            title="Thermodynamics"
+            subTitle="in Punjabi"
+            header1="23 November"
+            header2="Pending"
+            className="mt-[4vh]"
+          />
+          <VerticalCard
+            title="Thermodynamics"
+            subTitle="in Punjabi"
+            header1="23 November"
+            header2="Pending"
+            className="mt-[4vh]"
+          />
+          <VerticalCard
+            title="Thermodynamics"
+            subTitle="in Punjabi"
+            header1="23 November"
+            header2="Pending"
+            className="mt-[4vh]"
+          />
+          <VerticalCard
+            title="Thermodynamics"
+            subTitle="in Punjabi"
+            header1="23 November"
+            header2="Pending"
+            className="mt-[4vh]"
+          />
+        </ScrollView>
+        <View className="absolute w-full h-full justify-center">
+          <View className=" flex-row p-5 justify-between">
+            <Text className="text-4xl text-text">{"<"}</Text>
+            <Text className="text-4xl text-text">{">"}</Text>
+          </View>
+        </View>
+      </BodySection1>
+
+      <NavigationBar
+        navObjects={[
+          { text: "Explore", path: "requests", image: ExploreIcon },
+          { text: "Requests", path: "teacherStudents" },
+          {
+            text: "Ranking",
+            path: "teachersleaderboard",
+            image: LeaderboardIcon,
+          },
+        ]}
+      />
+    </SafeAreaView>
   );
 };
 const RequestSingle = ({
