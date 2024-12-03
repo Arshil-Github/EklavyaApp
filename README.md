@@ -81,6 +81,10 @@ _Rating Updates:_
 _User Information:_
 - GET /getstudentinfo - Retrieve detailed information about a specific student.
 
+![image](https://github.com/user-attachments/assets/12e5496e-a2ac-4d98-9ac1-d344bc29cd00)
+
+
 ### Technology Stack
 - Backend Framework: Express.js
 - Database: MongoDB
+- FrontEnd: React Nativev
