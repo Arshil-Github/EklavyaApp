@@ -1,6 +1,8 @@
 # Eklavya App: Connecting Students with New Gen Teachers
 
-![image](https://github.com/user-attachments/assets/4b139503-f5a6-4219-9a51-3ad7be9f4176)
+![image](https://github.com/user-attachments/assets/722c7bb7-93d2-4274-9a4a-25a72053aac6)
+
+
 
 ## Introduction 
 This app bridges the educational gap for underprivileged Indian students by connecting them with volunteer teachers. It features student and teacher portals, where students submit learning requests, matched with teachers based on region and language. Teachers accept requests, triggering confirmation notifications. After teaching, both parties provide feedback, contributing to a global leaderboard ranking teachers. Students can also access and request top-rated teachers for a small fee, incentivizing educators. The platform supports multilingual access, fosters inclusive education, and promotes affordable, quality learning opportunities, driving impact in underserved communities while encouraging teacher engagement through recognition and rewards.
@@ -44,9 +46,9 @@ This repository contains the frontend for the Education Bridge App, developed us
   - Development Environment: Expo
 
 
-![image](https://github.com/user-attachments/assets/24661431-d7ec-49d1-98f7-144f40ed3291)
-![image](https://github.com/user-attachments/assets/b16e41a7-b70f-478c-b105-8562aaf832a8)
-![image](https://github.com/user-attachments/assets/b53fae35-d651-4324-877e-446bd601e7d4)
+![image](https://github.com/user-attachments/assets/47af25b9-a6d9-48f9-8a0c-ec7f01ec7a21)
+![image](https://github.com/user-attachments/assets/a42e428e-910f-4439-8f71-72eef46bd084)
+![image](https://github.com/user-attachments/assets/07ea1b0d-5b4e-4e85-8a3f-afc8811b7fd8)
 
 
 ## Backend
