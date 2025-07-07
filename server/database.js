@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectionURL =
-  "mongodb+srv://anantarora2005:HekDVrv36gCCOyJl@cluster0.peyiv0g.mongodb.net/Eklavya";
+  "mongodb+srv://anantarora2005:HekDVrv36gCCOyJl@cluster0.peyiv0g.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0Eklavya";
 
 mongoose.connect(connectionURL);
 
