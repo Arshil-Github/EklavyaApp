@@ -177,7 +177,8 @@ const StudentForm = ({ setIdentity, router }) => {
   );
 };
 
-const TeacherForm = ({ setIdentity, router }) => {
+const TeacherForm = ({ setIdentity }) => {
+  const router = useRouter(); // ✅ Fix: define router here
   const [teacherInfo, setTeacherInfo] = useState({
     name: "",
     phoneNumber: "",
@@ -189,37 +190,44 @@ const TeacherForm = ({ setIdentity, router }) => {
 
   return (
     <View className="flex-1 items-center justify-center w-[90%]">
-      <Text className="color-slate-50 text-3xl mb-10">Create Account - Teacher</Text>
+      <Text className="color-slate-50 text-3xl">Create Account - Teacher</Text>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="w-full">
         <View className="w-full flex-1 items-center">
-          {Object.keys(teacherInfo).map((field, idx) => (
+          {["name", "expertise", "languages", "region", "phoneNumber", "password"].map((field, idx) => (
             <TextInput
               key={idx}
               className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
-              placeholder={field === "languages" ? "Preferred Language" : field[0].toUpperCase() + field.slice(1)}
-              onChangeText={(text) => setTeacherInfo({ ...teacherInfo, [field]: text })}
+              placeholder={
+                field === "languages"
+                  ? "Preferred Language"
+                  : field.charAt(0).toUpperCase() + field.slice(1)
+              }
+              onChangeText={(text) =>
+                setTeacherInfo({ ...teacherInfo, [field]: text })
+              }
               inputMode={field === "phoneNumber" ? "numeric" : "text"}
               enablesReturnKeyAutomatically
               secureTextEntry={field === "password"}
             />
           ))}
-
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
-            onPress={() => SendTeacherInfo(teacherInfo, router)}
+            onPress={() => {
+              SendTeacherInfo(teacherInfo, router);
+            }}
           >
-            <Text className="text-2xl text-center font-semibold tracking-wider color-background">
+            <Text className="text-2xl text-center text-background">
               Create Account
             </Text>
           </TouchableHighlight>
         </View>
       </TouchableWithoutFeedback>
-
-      <View className="mb-3">
-        <TouchableHighlight onPress={() => setIdentity(null)}>
-          <Text className="text-xl color-blue-600 text-center">Go back</Text>
-        </TouchableHighlight>
-      </View>
+      <Button
+        title="Go back"
+        onPress={() => {
+          setIdentity(null);
+        }}
+      />
     </View>
   );
 };
