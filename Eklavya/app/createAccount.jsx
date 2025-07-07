@@ -1,5 +1,3 @@
-// File: CreateAccount.js
-
 import {
   StyleSheet,
   Text,
@@ -19,46 +17,51 @@ import { useRouter } from "expo-router";
 const CreateAccount = () => {
   const router = useRouter();
   const [identity, setIdentity] = useState(null);
-
   return (
     <SafeAreaView
       edges={["right", "top", "left"]}
-      className="h-full items-center justify-center bg-background"
+      className="h-full items-center justify-center bg-background "
     >
-      <View className="flex items-center justify-center h-[20%] w-[90%]" />
-
-      {identity === null && (
+      <View className="flex items-center justify-center h-[20%] w-[90%] " />
+      {identity === null ? (
         <View className="flex-1 items-center justify-center w-[90%]">
           <Text className="color-text text-2xl">I am a</Text>
           <TouchableHighlight
-            className="bg-primary rounded-lg mt-2 w-[80%] p-2"
-            onPress={() => setIdentity("student")}
+            className=" bg-primary rounded-lg mt-2 w-[80%] p-2"
+            onPress={() => {
+              setIdentity("student");
+            }}
           >
             <Text className="text-2xl font-semibold color-background text-center">
               Student
             </Text>
           </TouchableHighlight>
           <TouchableHighlight
-            className="bg-primary rounded-lg mt-2 w-[80%] p-2"
-            onPress={() => setIdentity("teacher")}
+            className=" bg-primary rounded-lg mt-2 w-[80%] p-2"
+            onPress={() => {
+              setIdentity("teacher");
+            }}
           >
             <Text className="text-2xl font-semibold color-background text-center">
               Teacher
             </Text>
           </TouchableHighlight>
         </View>
-      )}
-
-      {identity === "student" && (
+      ) : null}
+      {identity === "student" ? (
         <StudentForm setIdentity={setIdentity} router={router} />
-      )}
-      {identity === "teacher" && (
+      ) : null}
+      {identity === "teacher" ? (
         <TeacherForm setIdentity={setIdentity} router={router} />
-      )}
+      ) : null}
 
       <View className="mb-10">
-        <TouchableHighlight onPress={() => router.push("/signIn")}>
-          <Text className="text-xl color-blue-600 text-center">
+        <TouchableHighlight
+          onPress={() => {
+            router.push("/signIn");
+          }}
+        >
+          <Text className="text-xl  color-blue-600 text-center">
             Already a member? Sign in
           </Text>
         </TouchableHighlight>
@@ -67,99 +70,153 @@ const CreateAccount = () => {
   );
 };
 
-const SendStudentInfo = async (studentInfo, router) => {
-  const { name, language, location, phoneNumber, password } = studentInfo;
-  if (!name || !language || !location || !phoneNumber || !password) {
+const SendStudentInfo = async (studentInfo) => {
+  if (
+    studentInfo.name === "" ||
+    studentInfo.language === "" ||
+    studentInfo.location === "" ||
+    studentInfo.phoneNumber === "" ||
+    studentInfo.password === ""
+  ) {
     alert("Please fill all the fields");
     return;
   }
 
   try {
-    const response = await fetch(`${config.BackendServer}/auth/studentSignIn`, {
+    const response = await fetch(${config.BackendServer}/auth/studentSignIn, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        name,
-        phoneNumber,
-        region: location,
-        languages: language,
-        password,
+        name: studentInfo.name,
+        phoneNumber: studentInfo.phoneNumber,
+        region: studentInfo.location,
+        languages: studentInfo.language,
+        password: studentInfo.password,
       }),
     });
-
     const data = await response.json();
     alert("Account created successfully");
+    //Set the user type in the local storage
     await AsyncStorage.setItem("userType", "student");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
-    router.push("/studentHome");
+
+    console.log(data);
+    //navigate to the home page
+    useRouter().navigate("/studentHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
   }
 };
-
-const SendTeacherInfo = async (teacherInfo, router) => {
-  const { name, expertise, region, phoneNumber, password, languages } = teacherInfo;
-  if (!name || !expertise || !region || !phoneNumber || !password) {
+const SendTeacherInfo = async (teacherInfo) => {
+  if (
+    teacherInfo.name === "" ||
+    teacherInfo.expertise === "" ||
+    teacherInfo.region === "" ||
+    teacherInfo.phoneNumber === "" ||
+    teacherInfo.password === ""
+  ) {
     alert("Please fill all the fields");
     return;
   }
 
   try {
-    const response = await fetch(`${config.BackendServer}/auth/teacherSignIn`, {
+    const response = await fetch(${config.BackendServer}/auth/teacherSignIn, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
-        name,
-        phoneNumber,
-        region,
-        languages,
-        expertise,
-        password,
+        name: teacherInfo.name,
+        phoneNumber: teacherInfo.phoneNumber,
+        region: teacherInfo.region,
+        languages: teacherInfo.languages,
+        expertise: teacherInfo.expertise,
+        password: teacherInfo.password,
       }),
     });
-
     const data = await response.json();
     alert("Account created successfully");
+    //Set the user type in the local storage
     await AsyncStorage.setItem("userType", "teacher");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
-    router.push("/teachersHome");
+    //navigate to the home page
+    useRouter().navigate("/teachersHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
+    console.log(teacherInfo);
   }
 };
-
-const StudentForm = ({ setIdentity, router }) => {
-  const [studentInfo, setStudentInfo] = useState({
+const StudentForm = ({ setIdentity }) => {
+  const studentInfo = {
     name: "",
     language: "",
     location: "",
     phoneNumber: "",
+    email: "",
     password: "",
-  });
+  };
 
   return (
     <View className="flex-1 items-center justify-center w-[90%]">
-      <Text className="color-text text-2xl mb-10">Create Account - Student</Text>
+      <Text className="color-text text-2xl mb-10">
+        Create Account - Student
+      </Text>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="w-full">
         <View className="w-full flex-1 items-center">
-          {Object.keys(studentInfo).map((field, idx) => (
-            <TextInput
-              key={idx}
-              className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
-              placeholder={field === "language" ? "Preferred Language" : field[0].toUpperCase() + field.slice(1)}
-              onChangeText={(text) => setStudentInfo({ ...studentInfo, [field]: text })}
-              inputMode={field === "phoneNumber" ? "numeric" : "text"}
-              enablesReturnKeyAutomatically
-              secureTextEntry={field === "password"}
-            />
-          ))}
-
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Name"
+            onChangeText={(text) => {
+              studentInfo.name = text;
+            }}
+            inputMode="text"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Preffered Language"
+            onChangeText={(text) => {
+              studentInfo.language = text;
+            }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Location"
+            onChangeText={(text) => {
+              studentInfo.location = text;
+            }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Phone Number"
+            onChangeText={(text) => {
+              studentInfo.phoneNumber = text;
+            }}
+            inputMode="numeric"
+            enablesReturnKeyAutomatically={true}
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Password"
+            onChangeText={(text) => {
+              studentInfo.password = text;
+            }}
+            enablesReturnKeyAutomatically={true}
+            secureTextEntry
+          />
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
-            onPress={() => SendStudentInfo(studentInfo, router)}
+            onPress={() => {
+              SendStudentInfo(studentInfo);
+            }}
           >
             <Text className="text-2xl text-center font-semibold tracking-wider color-background">
               Create Account
@@ -169,8 +226,12 @@ const StudentForm = ({ setIdentity, router }) => {
       </TouchableWithoutFeedback>
 
       <View className="mb-3">
-        <TouchableHighlight onPress={() => setIdentity(null)}>
-          <Text className="text-xl color-blue-600 text-center">Go back</Text>
+        <TouchableHighlight
+          onPress={() => {
+            setIdentity(null);
+          }}
+        >
+          <Text className="text-xl  color-blue-600 text-center">Go back</Text>
         </TouchableHighlight>
       </View>
     </View>
@@ -178,42 +239,73 @@ const StudentForm = ({ setIdentity, router }) => {
 };
 
 const TeacherForm = ({ setIdentity }) => {
-  const router = useRouter(); // ✅ Fix: define router here
-  const [teacherInfo, setTeacherInfo] = useState({
+  const teacherInfo = {
     name: "",
     phoneNumber: "",
     region: "",
     languages: "",
     expertise: "",
     password: "",
-  });
-
+  };
   return (
     <View className="flex-1 items-center justify-center w-[90%]">
       <Text className="color-slate-50 text-3xl">Create Account - Teacher</Text>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="w-full">
         <View className="w-full flex-1 items-center">
-          {["name", "expertise", "languages", "region", "phoneNumber", "password"].map((field, idx) => (
-            <TextInput
-              key={idx}
-              className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
-              placeholder={
-                field === "languages"
-                  ? "Preferred Language"
-                  : field.charAt(0).toUpperCase() + field.slice(1)
-              }
-              onChangeText={(text) =>
-                setTeacherInfo({ ...teacherInfo, [field]: text })
-              }
-              inputMode={field === "phoneNumber" ? "numeric" : "text"}
-              enablesReturnKeyAutomatically
-              secureTextEntry={field === "password"}
-            />
-          ))}
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Name"
+            onChangeText={(text) => {
+              teacherInfo.name = text;
+            }}
+            inputMode="text"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Expertise"
+            onChangeText={(text) => {
+              teacherInfo.expertise = text;
+            }}
+            inputMode="text"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Preffered Language"
+            onChangeText={(text) => {
+              teacherInfo.languages = text;
+            }}
+            inputMode="text"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Location"
+            onChangeText={(text) => {
+              teacherInfo.region = text;
+            }}
+            inputMode="text"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Phone Number"
+            onChangeText={(text) => {
+              teacherInfo.phoneNumber = text;
+            }}
+            inputMode="numeric"
+          />
+          <TextInput
+            className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
+            placeholder="Password"
+            onChangeText={(text) => {
+              teacherInfo.password = text;
+            }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
+            secureTextEntry
+          />
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
             onPress={() => {
-              SendTeacherInfo(teacherInfo, router);
+              SendTeacherInfo(teacherInfo);
             }}
           >
             <Text className="text-2xl text-center text-background">
@@ -235,3 +327,5 @@ const TeacherForm = ({ setIdentity }) => {
 export default CreateAccount;
 
 const styles = StyleSheet.create({});
+
+this is the code for account creation why is showing error
