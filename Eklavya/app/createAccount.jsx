@@ -21,9 +21,9 @@ const CreateAccount = () => {
   return (
     <SafeAreaView
       edges={["right", "top", "left"]}
-      className="h-full items-center justify-center bg-background"
+      className="h-full items-center justify-center bg-background "
     >
-      <View className="flex items-center justify-center h-[20%] w-[90%]" />
+      <View className="flex items-center justify-center h-[20%] w-[90%] " />
       {identity === null ? (
         <View className="flex-1 items-center justify-center w-[90%]">
           <Text className="color-text text-2xl">I am a</Text>
@@ -49,7 +49,6 @@ const CreateAccount = () => {
           </TouchableHighlight>
         </View>
       ) : null}
-
       {identity === "student" ? (
         <StudentForm setIdentity={setIdentity} router={router} />
       ) : null}
@@ -63,7 +62,7 @@ const CreateAccount = () => {
             router.push("/signIn");
           }}
         >
-          <Text className="text-xl color-blue-600 text-center">
+          <Text className="text-xl  color-blue-600 text-center">
             Already a member? Sign in
           </Text>
         </TouchableHighlight>
@@ -72,7 +71,6 @@ const CreateAccount = () => {
   );
 };
 
-// ✅ Accept router as parameter
 const SendStudentInfo = async (studentInfo, router) => {
   if (
     studentInfo.name === "" ||
@@ -99,15 +97,11 @@ const SendStudentInfo = async (studentInfo, router) => {
         password: studentInfo.password,
       }),
     });
-
     const data = await response.json();
     alert("Account created successfully");
-
     await AsyncStorage.setItem("userType", "student");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
-
-    console.log(data);
-    router.push("/studentHome"); // ✅ fixed
+    router.push("/studentHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
@@ -141,14 +135,11 @@ const SendTeacherInfo = async (teacherInfo, router) => {
         password: teacherInfo.password,
       }),
     });
-
     const data = await response.json();
     alert("Account created successfully");
-
     await AsyncStorage.setItem("userType", "teacher");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
-
-    router.push("/teachersHome"); // ✅ fixed
+    router.push("/teachersHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
@@ -168,7 +159,9 @@ const StudentForm = ({ setIdentity, router }) => {
 
   return (
     <View className="flex-1 items-center justify-center w-[90%]">
-      <Text className="color-text text-2xl mb-10">Create Account - Student</Text>
+      <Text className="color-text text-2xl mb-10">
+        Create Account - Student
+      </Text>
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} className="w-full">
         <View className="w-full flex-1 items-center">
@@ -178,13 +171,16 @@ const StudentForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               studentInfo.name = text;
             }}
+            inputMode="text"
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
-            placeholder="Preferred Language"
+            placeholder="Preffered Language"
             onChangeText={(text) => {
               studentInfo.language = text;
             }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -192,6 +188,8 @@ const StudentForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               studentInfo.location = text;
             }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -200,6 +198,7 @@ const StudentForm = ({ setIdentity, router }) => {
               studentInfo.phoneNumber = text;
             }}
             inputMode="numeric"
+            enablesReturnKeyAutomatically={true}
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -207,12 +206,13 @@ const StudentForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               studentInfo.password = text;
             }}
+            enablesReturnKeyAutomatically={true}
             secureTextEntry
           />
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
             onPress={() => {
-              SendStudentInfo(studentInfo, router); // ✅ pass router
+              SendStudentInfo(studentInfo, router);
             }}
           >
             <Text className="text-2xl text-center font-semibold tracking-wider color-background">
@@ -228,7 +228,7 @@ const StudentForm = ({ setIdentity, router }) => {
             setIdentity(null);
           }}
         >
-          <Text className="text-xl color-blue-600 text-center">Go back</Text>
+          <Text className="text-xl  color-blue-600 text-center">Go back</Text>
         </TouchableHighlight>
       </View>
     </View>
@@ -256,6 +256,7 @@ const TeacherForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               teacherInfo.name = text;
             }}
+            inputMode="text"
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -263,13 +264,15 @@ const TeacherForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               teacherInfo.expertise = text;
             }}
+            inputMode="text"
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
-            placeholder="Preferred Language"
+            placeholder="Preffered Language"
             onChangeText={(text) => {
               teacherInfo.languages = text;
             }}
+            inputMode="text"
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -277,6 +280,7 @@ const TeacherForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               teacherInfo.region = text;
             }}
+            inputMode="text"
           />
           <TextInput
             className="w-full min-h-[5vh] bg-slate-300 rounded-lg px-3 text-2xl mt-2 text-background py-2 border-2 border-primary"
@@ -292,12 +296,14 @@ const TeacherForm = ({ setIdentity, router }) => {
             onChangeText={(text) => {
               teacherInfo.password = text;
             }}
+            inputMode="text"
+            enablesReturnKeyAutomatically={true}
             secureTextEntry
           />
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
             onPress={() => {
-              SendTeacherInfo(teacherInfo, router); // ✅ pass router
+              SendTeacherInfo(teacherInfo, router);
             }}
           >
             <Text className="text-2xl text-center text-background">
@@ -306,7 +312,12 @@ const TeacherForm = ({ setIdentity, router }) => {
           </TouchableHighlight>
         </View>
       </TouchableWithoutFeedback>
-      <Button title="Go back" onPress={() => setIdentity(null)} />
+      <Button
+        title="Go back"
+        onPress={() => {
+          setIdentity(null);
+        }}
+      />
     </View>
   );
 };
