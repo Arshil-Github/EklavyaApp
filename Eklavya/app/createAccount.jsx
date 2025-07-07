@@ -327,5 +327,3 @@ const TeacherForm = ({ setIdentity }) => {
 export default CreateAccount;
 
 const styles = StyleSheet.create({});
-
-this is the code for account creation why is showing error
