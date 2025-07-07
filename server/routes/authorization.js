@@ -10,7 +10,7 @@ authRouter.post("/studentSignIn", async (req, res) => {
   if (!name || !phoneNumber || !region || !languages || !password) {
     return res.status(400).send("All fields are required");
   }
-
+console.log(PhoneNumber)
   try {
     const existingTeacher = await database.TeacherDb.findOne({ phoneNumber });
     const existingStudent = await database.StudentDb.findOne({ phoneNumber });
