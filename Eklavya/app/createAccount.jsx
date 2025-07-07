@@ -70,7 +70,7 @@ const CreateAccount = () => {
   );
 };
 
-const SendStudentInfo = async (studentInfo) => {
+const SendStudentInfo = async (studentInfo, router) => {
   if (
     studentInfo.name === "" ||
     studentInfo.language === "" ||
@@ -104,13 +104,13 @@ const SendStudentInfo = async (studentInfo) => {
 
     console.log(data);
     //navigate to the home page
-    useRouter().navigate("/studentHome");
+    router.push("/studentHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
   }
 };
-const SendTeacherInfo = async (teacherInfo) => {
+const SendTeacherInfo = async (teacherInfo, router) => {
   if (
     teacherInfo.name === "" ||
     teacherInfo.expertise === "" ||
@@ -143,7 +143,7 @@ const SendTeacherInfo = async (teacherInfo) => {
     await AsyncStorage.setItem("userType", "teacher");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
     //navigate to the home page
-    useRouter().navigate("/teachersHome");
+     router.push("/teachersHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
@@ -215,7 +215,7 @@ const StudentForm = ({ setIdentity }) => {
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
             onPress={() => {
-              SendStudentInfo(studentInfo);
+              SendStudentInfo(studentInfo, router);
             }}
           >
             <Text className="text-2xl text-center font-semibold tracking-wider color-background">
@@ -305,7 +305,7 @@ const TeacherForm = ({ setIdentity }) => {
           <TouchableHighlight
             className="mt-10 bg-accent w-full p-3 rounded-xl"
             onPress={() => {
-              SendTeacherInfo(teacherInfo);
+              SendTeacherInfo(teacherInfo, router);
             }}
           >
             <Text className="text-2xl text-center text-background">
