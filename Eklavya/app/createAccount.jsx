@@ -104,7 +104,7 @@ const SendStudentInfo = async (studentInfo, router) => {
 
     console.log(data);
     //navigate to the home page
-    router.push("/studentHome");
+    router?.push("/studentHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
@@ -143,7 +143,7 @@ const SendTeacherInfo = async (teacherInfo, router) => {
     await AsyncStorage.setItem("userType", "teacher");
     await AsyncStorage.setItem("userData", JSON.stringify(data));
     //navigate to the home page
-     router.push("/teachersHome");
+     router?.push("/teachersHome");
   } catch (e) {
     alert("Error in creating account");
     console.log(e);
