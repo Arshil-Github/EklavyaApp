@@ -1,4 +1,5 @@
-const BackendServer = "http://192.168.186.86:3000";
+const BackendServer = "https://fab0adb723a6.ngrok-free.app";
+
 const useStorage = true;
 
 export default { BackendServer, useStorage };
